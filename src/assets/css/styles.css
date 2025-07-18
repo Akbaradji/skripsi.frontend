@@ -1,0 +1,146 @@
+/* General Body Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container Centering */
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Login Form Styling */
+.login-form {
+  background: white;
+  padding: 30px 40px;
+  width: 320px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.login-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.login-form button {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #0056b3;
+}
+
+.message {
+  text-align: center;
+  color: red;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+/* Landing Page Layout */
+.landing-container {
+  text-align: center;
+  padding: 100px 20px;
+  background: linear-gradient(to bottom right, #f8fbfd, #e9f1f7);
+  min-height: 100vh;
+  position: relative;
+}
+
+.logo-kominfo {
+  max-width: 130px;
+  margin-bottom: 30px;
+}
+
+.landing-container h1 {
+  font-size: 2.5rem;
+  color: #1e3a5f;
+  margin: 0;
+}
+
+.landing-container h1 span {
+  color: #0077b6;
+}
+
+.subtitle {
+  color: #1e3a5f;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+.desc {
+  color: #444;
+  font-size: 1rem;
+  margin-top: 8px;
+  margin-bottom: 30px;
+}
+
+/* Tombol di Kanan Atas */
+.top-right-buttons {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  gap: 12px;
+}
+
+.btn-primary {
+  background-color: #0077b6;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #005f8e;
+}
+
+.btn-secondary {
+  background-color: #ff6b6b;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #d63f3f;
+}
+

@@ -1,0 +1,136 @@
+.landing-container {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(to bottom right, #f7f9fc, #e9edf3);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-kominfo {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+}
+
+h1 span {
+  color: #0077b6;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #34495e;
+}
+
+.desc {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.btn-primary, .btn-secondary, .btn-link {
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #0077b6;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #005f8e;
+}
+
+.btn-secondary {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #d63f3f;
+}
+
+.btn-link {
+  color: #333;
+  text-decoration: underline;
+  padding: 10px;
+}
+
+.btn-link:hover {
+  color: #0077b6;
+}
+
+.contact-info {
+  margin-top: 40px;
+  padding: 25px 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.contact-info h4 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.contact-info p {
+  margin: 4px 0;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.contact-info .highlight {
+  color: #0077b6;
+  font-weight: 500;
+}
+
+.contact-info .icon {
+  margin-right: 8px;
+  color: #0077b6;
+}
+
+
+.admin-login-link {
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  font-size: 0.9rem;
+  color: #888;
+  background-color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.admin-login-link:hover {
+  color: #0077b6;
+  border-color: #0077b6;
+}
+
