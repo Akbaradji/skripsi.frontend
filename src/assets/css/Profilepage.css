@@ -1,0 +1,98 @@
+.profile-page-container {
+    min-height: 100vh;
+    background-color: #F3F4F6; /* Mirip bg-gray-100 */
+    padding: 1rem; /* Mirip p-4 */
+    font-family: 'Inter', sans-serif; /* Mirip font-inter */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 640px) { /* sm: */
+    .profile-page-container {
+        padding: 1.5rem; /* Mirip sm:p-6 */
+    }
+}
+
+@media (min-width: 1024px) { /* lg: */
+    .profile-page-container {
+        padding: 2rem; /* Mirip lg:p-8 */
+    }
+}
+
+.profile-card {
+    max-width: 28rem; /* Mirip max-w-md */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border-radius: 0.75rem; /* Mirip rounded-xl */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* Mirip shadow-lg */
+    padding: 1.5rem; /* Mirip p-6 */
+    text-align: center; /* Mirip text-center */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .profile-card {
+        padding: 2rem; /* Mirip sm:p-8 */
+    }
+}
+
+.profile-title {
+    font-size: 1.5rem; /* Mirip text-2xl */
+    font-weight: 700; /* Mirip font-bold */
+    color: #1F2937; /* Mirip text-gray-800 */
+    margin-bottom: 1.5rem; /* Mirip mb-6 */
+}
+
+.profile-info-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem; /* Mirip mb-6 */
+}
+
+.profile-avatar {
+    width: 7rem; /* Mirip w-28 */
+    height: 7rem; /* Mirip h-28 */
+    background-color: #2563EB; /* Mirip bg-blue-500 */
+    border-radius: 9999px; /* Mirip rounded-full */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 3.125rem; /* Mirip text-5xl */
+    font-weight: 700; /* Mirip font-bold */
+    margin-bottom: 1rem; /* Mirip mb-4 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Mirip shadow-md */
+}
+
+.profile-name {
+    font-size: 1.5rem; /* Mirip text-2xl */
+    font-weight: 600; /* Mirip font-semibold */
+    color: #1F2937; /* Mirip text-gray-800 */
+}
+
+.profile-email {
+    color: #4B5563; /* Mirip text-gray-600 */
+    font-size: 1.125rem; /* Mirip text-lg */
+}
+
+/* Styling untuk loading dan error container */
+.profile-loading-error-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F3F4F6;
+}
+
+.profile-loading-message {
+    color: #4B5563;
+    font-size: 1.125rem;
+}
+
+.profile-error-message {
+    color: #EF4444;
+    font-size: 1.125rem;
+}

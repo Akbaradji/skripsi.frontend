@@ -1,6 +1,6 @@
-/* src/assets/css/Register.css */
+/* src/assets/css/AdminLogin.css */
 
-.register-page-container {
+.admin-login-page-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -10,7 +10,7 @@
     font-family: 'Inter', sans-serif; /* Mirip font-inter */
 }
 
-.register-card {
+.admin-login-card {
     max-width: 28rem; /* Mirip max-w-md */
     width: 100%;
     background-color: white;
@@ -20,12 +20,12 @@
 }
 
 @media (min-width: 640px) { /* sm: */
-    .register-card {
+    .admin-login-card {
         padding: 2rem; /* Mirip sm:p-8 */
     }
 }
 
-.register-title {
+.admin-login-title {
     font-size: 1.875rem; /* Mirip text-3xl */
     font-weight: 700; /* Mirip font-bold */
     color: #1F2937; /* Mirip text-gray-800 */
@@ -33,7 +33,7 @@
     text-align: center;
 }
 
-.register-form-content {
+.admin-login-form-content {
     display: flex;
     flex-direction: column;
     gap: 1rem; /* Mirip space-y-4 */
@@ -53,12 +53,7 @@
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Mirip focus:ring-blue-500 */
 }
 
-.recaptcha-container {
-    display: flex;
-    justify-content: center;
-}
-
-.register-button {
+.admin-login-button {
     width: 100%;
     background-color: #2563EB; /* Mirip bg-blue-600 */
     color: white;
@@ -70,16 +65,16 @@
     border: none;
 }
 
-.register-button:hover {
+.admin-login-button:hover {
     background-color: #1D4ED8; /* Mirip hover:bg-blue-700 */
 }
 
-.register-button:focus {
+.admin-login-button:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Mirip focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 */
 }
 
-.register-button:disabled {
+.admin-login-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }

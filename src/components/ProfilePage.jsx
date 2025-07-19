@@ -1,106 +1,88 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import '../assets/css/ProfilePage.css'; 
 
 export default function ProfilePage() {
     const [user, setUser] = useState({
         name: '',
         email: '',
-        password: '',
     });
+    const [loading, setLoading] = useState(true);
     const [msg, setMsg] = useState('');
-    const navigate = useNavigate();
 
-    // Ambil data user dari API
+    // Fungsi untuk mendapatkan inisial nama dari string nama lengkap
+    const getInitials = (name) => {
+        if (!name) return '';
+        const nameParts = name.split(' ').filter(part => part.length > 0);
+        if (nameParts.length === 1) {
+            return nameParts[0].charAt(0).toUpperCase();
+        }
+        return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
+    };
+
+    // Ambil data user dari API saat komponen dimuat
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
             setMsg('Silakan login terlebih dahulu.');
+            setLoading(false);
             return;
         }
 
-        // Ambil data user menggunakan token
         axios.get('http://localhost:8000/api/me', {
             headers: { Authorization: `Bearer ${token}` }
         })
-            .then(res => setUser(res.data))
-            .catch(() => setMsg('Token tidak valid atau sudah kadaluarsa.'));
+        .then(res => {
+            setUser({
+                name: res.data.name,
+                email: res.data.email,
+            });
+            setLoading(false);
+        })
+        .catch(err => {
+            setMsg('Token tidak valid atau sudah kadaluarsa.');
+            setLoading(false);
+            console.error('Error fetching user data:', err); // Log error untuk debugging
+        });
     }, []);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUser((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
+    // Tampilkan pesan loading saat data sedang diambil
+    if (loading) return (
+        <div className="profile-loading-error-container">
+            <p className="profile-loading-message">Loading profil...</p>
+        </div>
+    );
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const token = localStorage.getItem('token');
-        try {
-            const res = await axios.put('http://localhost:8000/api/profile', user, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-
-            setMsg('Profil berhasil diperbarui!');
-        } catch (err) {
-            console.error('Error detail:', err);  // Debug error lebih detail
-            if (err.response) {
-                setMsg(`Gagal memperbarui profil: ${err.response.data.message || 'Unknown error'}`);
-            } else if (err.request) {
-                setMsg('Gagal memperbarui profil: Tidak ada respon dari server');
-            } else {
-                setMsg(`Gagal memperbarui profil: ${err.message}`);
-            }
-        };
-    }
-
-    if (msg) return <p>{msg}</p>;
+    // Tampilkan pesan error jika ada masalah atau user belum login
+    if (msg) return (
+        <div className="profile-loading-error-container">
+            <p className="profile-error-message">{msg}</p>
+        </div>
+    );
+    
+    // Tampilkan pesan jika tidak ada data profil (setelah loading dan tidak ada error msg)
+    if (!user.name) return (
+        <div className="profile-loading-error-container">
+            <p className="profile-loading-message">Data profil tidak tersedia.</p>
+        </div>
+    );
 
     return (
-        <div style={{ maxWidth: 600, margin: 'auto', padding: 20 }}>
-            <h2>Pengaturan Profil</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Nama:
-                    <input
-                        type="text"
-                        name="name"
-                        value={user.name}
-                        onChange={handleChange}
-                        required
-                        style={{ width: '100%', padding: '8px', margin: '8px 0' }}
-                    />
-                </label>
-                <br />
-                <label>
-                    Email:
-                    <input
-                        type="email"
-                        name="email"
-                        value={user.email}
-                        onChange={handleChange}
-                        required
-                        style={{ width: '100%', padding: '8px', margin: '8px 0' }}
-                    />
-                </label>
-                <br />
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        name="password"
-                        value={user.password}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', margin: '8px 0' }}
-                    />
-                </label>
-                <br />
-                <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#3f51b5', color: '#fff' }}>
-                    Simpan Perubahan
-                </button>
-            </form>
+        <div className="profile-page-container">
+            <div className="profile-card">
+                <h2 className="profile-title">Profil Pengguna</h2>
+
+                <div className="profile-info-section">
+                    {/* Avatar Inisial: Menampilkan inisial nama pengguna di lingkaran */}
+                    <div className="profile-avatar">
+                        {getInitials(user.name)}
+                    </div>
+                    {/* Nama Pengguna */}
+                    <p className="profile-name">{user.name}</p>
+                    {/* Email Pengguna */}
+                    <p className="profile-email">{user.email}</p>
+                </div>
+            </div>
         </div>
     );
 }

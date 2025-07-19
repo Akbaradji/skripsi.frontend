@@ -1,0 +1,423 @@
+/* General container styles */
+.calendar-page-container {
+    min-height: 100vh;
+    background-color: #F3F4F6; /* Mirip bg-gray-100 */
+    padding: 1rem; /* Mirip p-4 */
+    font-family: 'Inter', sans-serif; /* Mirip font-inter */
+    /* display: flex; REMOVED to allow natural scrolling from top */
+    /* align-items: center; REMOVED */
+    /* justify-content: center; REMOVED */
+    overflow-y: auto; /* Mengizinkan gulir vertikal jika konten melebihi tinggi */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .calendar-page-container {
+        padding: 1.5rem; /* Mirip sm:p-6 */
+    }
+}
+
+@media (min-width: 1024px) { /* lg: */
+    .calendar-page-container {
+        padding: 2rem; /* Mirip lg:p-8 */
+    }
+}
+
+.calendar-card {
+    max-width: 48rem; /* Mirip max-w-4xl */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border-radius: 0.75rem; /* Mirip rounded-xl */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* Mirip shadow-lg */
+    padding: 0.75rem 1rem; /* Kurangi padding atas/bawah lebih jauh */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .calendar-card {
+        padding: 1rem 1.5rem; /* Kurangi padding atas/bawah lebih jauh */
+    }
+}
+
+.calendar-title {
+    font-size: 1.875rem; /* Mirip text-3xl */
+    font-weight: 700; /* Mirip font-bold */
+    color: #1F2937; /* Mirip text-gray-800 */
+    margin-bottom: 0.75rem; /* Kurangi margin-bottom lebih jauh */
+    text-align: center;
+}
+
+/* ⭐ Container untuk tombol navigasi kalender dan tombol kembali */
+.calendar-header-actions {
+    display: flex;
+    justify-content: space-between; /* Rata kiri untuk navigasi, rata kanan untuk tombol kembali */
+    align-items: center; /* Pusatkan vertikal */
+    margin-bottom: 1.5rem; /* Jarak di bawah header */
+    padding: 0 1rem; /* Sedikit padding horizontal */
+}
+
+/* Custom Calendar Styling */
+.custom-calendar-wrapper {
+    width: 100%;
+    max-width: 37.5rem; /* Mirip max-w-md (600px) */
+    margin: 0 auto;
+    border: 1px solid #E5E7EB; /* Mirip border border-gray-200 */
+    border-radius: 0.5rem; /* Mirip rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Mirip shadow-md */
+    padding: 1rem; /* Mirip p-4 */
+    background-color: white;
+}
+
+.calendar-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.nav-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.25rem; /* Mirip text-xl */
+    font-weight: 600; /* Mirip font-semibold */
+    color: #374151; /* Mirip text-gray-700 */
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.nav-button:hover {
+    background-color: #F3F4F6; /* Mirip hover:bg-gray-100 */
+}
+
+.current-month-year {
+    font-size: 1.25rem; /* Mirip text-xl */
+    font-weight: 600; /* Mirip font-semibold */
+    color: #1F2937; /* Mirip text-gray-900 */
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem; /* Gap antar hari */
+    text-align: center;
+}
+
+.weekday-header {
+    font-size: 0.75rem; /* Mirip text-xs */
+    font-weight: 700; /* Mirip font-bold */
+    color: #6B7280; /* Mirip text-gray-500 */
+    text-transform: uppercase;
+    padding: 0.5rem 0;
+}
+
+.day-cell {
+    padding: 0.75rem 0.5rem; /* Padding tile */
+    border-radius: 0.5rem; /* Mirip rounded-lg */
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    font-size: 0.875rem; /* Mirip text-sm */
+    color: #374151; /* Mirip text-gray-700 */
+    height: 3rem; /* Tinggi tetap untuk sel hari */
+    display: flex; /* Untuk memusatkan konten hari */
+    align-items: center; /* Untuk memusatkan konten hari */
+    justify-content: center; /* Untuk memusatkan konten hari */
+}
+
+.day-cell:hover:not(.empty-cell):not(.today-date):not(.internship-period-date):not(.approved-internship-date) {
+    background-color: #E5E7EB; /* Mirip hover:bg-gray-200 */
+}
+
+.empty-cell {
+    background-color: transparent;
+    cursor: default;
+}
+
+.today-date {
+    background-color: #DBEAFE; /* Mirip bg-blue-100 */
+    color: #1E40AF; /* Mirip text-blue-700 */
+    font-weight: 600;
+}
+
+/* Custom styling for internship period date (pending/ditolak) */
+.internship-period-date {
+    background-color: #BFDBFE; /* Mirip bg-blue-200 */
+    color: #1E40AF; /* Mirip text-blue-700 */
+    font-weight: 600;
+}
+
+/* Custom styling for approved internship date */
+.approved-internship-date {
+    background-color: #A7F3D0; /* Warna hijau muda, mirip bg-green-200 */
+    color: #065F46; /* Warna teks hijau tua, mirip text-green-800 */
+    font-weight: 700; /* Lebih bold */
+    border: 1px solid #34D399; /* Border hijau */
+}
+
+
+/* Custom styling for logbook dot */
+.day-cell.has-logbook-dot {
+    position: relative;
+}
+
+.day-cell.has-logbook-dot::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: #8B5CF6; /* Mirip bg-purple-500 */
+    border-radius: 50%;
+}
+
+/* Keterangan (Legend) */
+.calendar-legend {
+    margin-top: 0.5rem; /* Kurangi margin-top lebih jauh untuk lebih padat */
+    text-align: center;
+    padding: 0 0.5rem;
+}
+
+.legend-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.legend-items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.legend-color-box {
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 9999px;
+    margin-right: 0.2rem;
+}
+
+.internship-period-color {
+    background-color: #BFDBFE;
+}
+
+.approved-internship-color {
+    background-color: #A7F3D0; /* Warna hijau muda */
+    border: 1px solid #34D399; /* Border hijau */
+}
+
+
+.logbook-dot-indicator {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 0.125rem;
+}
+
+.logbook-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    background-color: #8B5CF6;
+    border-radius: 9999px;
+}
+
+.legend-text {
+    color: #4B5563;
+}
+
+
+/* Modal Styling (for @headlessui/react Dialog) */
+.modal-overlay-container {
+    position: fixed;
+    z-index: 10;
+    inset: 0;
+    overflow-y: auto;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: black;
+    opacity: 0.25;
+}
+
+.modal-content-wrapper {
+    display: flex;
+    min-height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+}
+
+.modal-panel {
+    width: 100%;
+    max-width: 28rem;
+    transform: none;
+    overflow: hidden;
+    border-radius: 1rem;
+    background-color: white;
+    padding: 1.5rem;
+    text-align: left;
+    vertical-align: middle;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-out;
+}
+
+.modal-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    color: #1F2937;
+    border-bottom: 1px solid #E5E7EB;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.modal-body {
+    margin-top: 0.5rem;
+    max-height: 60vh; /* Batasi tinggi modal body agar bisa digulir */
+    overflow-y: auto; /* Aktifkan gulir vertikal */
+    padding-right: 0.5rem; /* Tambahkan padding agar konten tidak menempel ke tepi */
+}
+
+.logbook-entry-card {
+    background-color: #F9FAFB; /* Latar belakang abu-abu muda */
+    border: 1px solid #E5E7EB; /* Border abu-abu */
+    border-radius: 0.5rem; /* Sudut membulat */
+    padding: 1rem; /* Padding di dalam kartu */
+    margin-bottom: 0.75rem; /* Jarak antar entri logbook */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Sedikit bayangan */
+}
+
+.logbook-user-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1F2937;
+    margin-bottom: 0.25rem;
+}
+
+.logbook-activity-text,
+.logbook-status-text,
+.logbook-note-text {
+    font-size: 0.875rem;
+    color: #374151;
+    margin-bottom: 0.25rem;
+}
+
+.logbook-label {
+    font-weight: 500;
+}
+
+/* Status badge styling (reused from PengajuanList.css) */
+.status-badge {
+    padding: 0.125rem 0.5rem;
+    display: inline-flex;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    border-radius: 9999px;
+}
+
+.status-badge.status-disetujui {
+    background-color: #D1FAE5;
+    color: #065F46;
+}
+
+.status-badge.status-ditolak {
+    background-color: #FEE2E2;
+    color: #991B1B;
+}
+
+.status-badge.status-pending {
+    background-color: #FEF3C7;
+    color: #92400E;
+}
+
+.logbook-note-text {
+    font-style: italic;
+    margin-top: 0.25rem;
+}
+
+.modal-footer {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-close-button {
+    display: inline-flex;
+    justify-content: center;
+    border-radius: 0.375rem;
+    border: 1px solid transparent;
+    background-color: #DBEAFE;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1E40AF;
+    transition: background-color 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+.modal-close-button:hover {
+    background-color: #BFDBFE;
+}
+
+.modal-close-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+.no-logbook-message {
+    color: #4B5563;
+}
+
+/* Transition styles for @headlessui/react */
+.modal-transition-enter {
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.modal-transition-enter-from {
+    opacity: 0;
+}
+.modal-transition-enter-to {
+    opacity: 1;
+}
+.modal-transition-leave {
+    transition-duration: 0.2s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.modal-transition-leave-from {
+    opacity: 1;
+}
+.modal-transition-leave-to {
+    opacity: 0;
+}
+
+.modal-transition-panel-enter-from {
+    opacity: 0;
+    transform: scale(0.95);
+}
+.modal-transition-panel-enter-to {
+    opacity: 1;
+    transform: scale(1);
+}
+.modal-transition-panel-leave-from {
+    opacity: 1;
+    transform: scale(1);
+}
+.modal-transition-panel-leave-to {
+    opacity: 0;
+    transform: scale(0.95);
+}

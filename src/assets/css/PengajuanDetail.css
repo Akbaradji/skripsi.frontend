@@ -1,0 +1,183 @@
+/* src/assets/css/PengajuanDetail.css */
+
+.pengajuan-detail-container {
+    min-height: 100vh;
+    background-color: #F3F4F6; /* Mirip bg-gray-100 */
+    padding: 1rem; /* Mirip p-4 */
+    font-family: 'Inter', sans-serif; /* Mirip font-inter */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 640px) { /* sm: */
+    .pengajuan-detail-container {
+        padding: 1.5rem; /* Mirip sm:p-6 */
+    }
+}
+
+@media (min-width: 1024px) { /* lg: */
+    .pengajuan-detail-container {
+        padding: 2rem; /* Mirip lg:p-8 */
+    }
+}
+
+.pengajuan-detail-card {
+    max-width: 36rem; /* Mirip max-w-2xl */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border-radius: 0.75rem; /* Mirip rounded-xl */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* Mirip shadow-lg */
+    padding: 1.5rem; /* Mirip p-6 */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .pengajuan-detail-card {
+        padding: 2rem; /* Mirip sm:p-8 */
+    }
+}
+
+.pengajuan-detail-title {
+    font-size: 1.5rem; /* Mirip text-2xl */
+    font-weight: 700; /* Mirip font-bold */
+    color: #1F2937; /* Mirip text-gray-800 */
+    margin-bottom: 1.5rem; /* Mirip mb-6 */
+    text-align: center;
+}
+
+@media (min-width: 768px) { /* md: */
+    .pengajuan-detail-title {
+        font-size: 1.875rem; /* Mirip md:text-3xl */
+    }
+}
+
+.detail-loading-error-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F3F4F6;
+}
+
+.detail-loading-message {
+    color: #4B5563; /* Mirip text-gray-700 */
+    font-size: 1.125rem; /* Mirip text-lg */
+}
+
+.detail-error-message {
+    color: #EF4444; /* Mirip text-red-500 */
+    font-size: 1.125rem; /* Mirip text-lg */
+}
+
+.detail-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Mirip space-y-4 */
+    color: #374151; /* Mirip text-gray-700 */
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column; /* Mirip flex-col */
+    align-items: flex-start; /* Default untuk mobile */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .detail-item {
+        flex-direction: row; /* Mirip sm:flex-row */
+        align-items: center; /* Mirip sm:items-center */
+    }
+    .detail-item.start-align { /* Untuk catatan admin yang mungkin panjang */
+        align-items: flex-start; /* Mirip sm:items-start */
+    }
+}
+
+.detail-label {
+    font-weight: 600; /* Mirip font-semibold */
+    width: 100%; /* Mirip w-full */
+    margin-bottom: 0.25rem; /* Sedikit jarak di mobile */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .detail-label {
+        width: 33.333333%; /* Mirip sm:w-1/3 */
+        margin-bottom: 0; /* Hapus jarak di desktop */
+    }
+}
+
+.detail-value {
+    width: 100%; /* Mirip w-full */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .detail-value {
+        width: 66.666667%; /* Mirip sm:w-2/3 */
+    }
+}
+
+/* Status badge styling (reused from PengajuanList.css) */
+.status-badge {
+    padding: 0.125rem 0.5rem;
+    display: inline-flex;
+    font-size: 0.875rem; /* text-sm */
+    line-height: 1.25rem;
+    font-weight: 600;
+    border-radius: 9999px;
+}
+
+.status-badge.status-disetujui {
+    background-color: #D1FAE5;
+    color: #065F46;
+}
+
+.status-badge.status-ditolak {
+    background-color: #FEE2E2;
+    color: #991B1B;
+}
+
+.status-badge.status-pending {
+    background-color: #FEF3C7;
+    color: #92400E;
+}
+
+/* PDF link styling (reused from PengajuanList.css) */
+.pdf-link {
+    color: #2563EB;
+    text-decoration: underline;
+}
+
+.pdf-link:hover {
+    color: #1D4ED8;
+}
+
+.no-file-text {
+    color: #6B7280;
+}
+
+.detail-back-button-container {
+    margin-top: 2rem; /* mt-8 */
+    text-align: center;
+}
+
+.back-button {
+    display: inline-block;
+    background-color: #D1D5DB; /* bg-gray-300 */
+    color: #1F2937; /* text-gray-800 */
+    padding: 0.5rem 1rem; /* py-2 px-4 */
+    border-radius: 0.5rem; /* rounded-lg */
+    font-weight: 600; /* font-semibold */
+    transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #9CA3AF; /* hover:bg-gray-400 */
+}
+
+.back-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.5); /* focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 */
+}

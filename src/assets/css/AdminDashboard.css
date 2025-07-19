@@ -1,0 +1,205 @@
+/* src/assets/css/AdminDashboard.css */
+
+.admin-dashboard-container {
+    min-height: 100vh;
+    background-color: #F3F4F6; /* Mirip bg-gray-100 */
+    padding: 1rem; /* Mirip p-4 */
+    font-family: 'Inter', sans-serif; /* Mirip font-inter */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .admin-dashboard-container {
+        padding: 1.5rem; /* Mirip sm:p-6 */
+    }
+}
+
+@media (min-width: 1024px) { /* lg: */
+    .admin-dashboard-container {
+        padding: 2rem; /* Mirip lg:p-8 */
+    }
+}
+
+.admin-dashboard-card {
+    max-width: 64rem; /* Mirip max-w-4xl */
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border-radius: 0.75rem; /* Mirip rounded-xl */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* Mirip shadow-lg */
+    padding: 1.5rem; /* Mirip p-6 */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .admin-dashboard-card {
+        padding: 2rem; /* Mirip sm:p-8 */
+    }
+}
+
+.admin-dashboard-title {
+    font-size: 1.5rem; /* Mirip text-2xl */
+    font-weight: 700; /* Mirip font-bold */
+    color: #1F2937; /* Mirip text-gray-800 */
+    margin-bottom: 1.5rem; /* Mirip mb-6 */
+    text-align: center;
+}
+
+@media (min-width: 768px) { /* md: */
+    .admin-dashboard-title {
+        font-size: 1.875rem; /* Mirip md:text-3xl */
+    }
+}
+
+.admin-logout-button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem; /* Mirip mb-8 */
+}
+
+.admin-logout-button {
+    padding: 0.5rem 1.5rem; /* Mirip px-6 py-2 */
+    background-color: #DC2626; /* Mirip bg-red-600 */
+    color: white;
+    font-weight: 600; /* Mirip font-semibold */
+    border-radius: 0.5rem; /* Mirip rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Mirip shadow-md */
+    transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+
+.admin-logout-button:hover {
+    background-color: #B91C1C; /* Mirip hover:bg-red-700 */
+}
+
+.admin-logout-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.5); /* Mirip focus:ring-2 focus:ring-red-500 focus:ring-offset-2 */
+}
+
+.admin-dashboard-nav {
+    margin-bottom: 2rem; /* Mirip mb-8 */
+    display: flex;
+    flex-direction: column; /* Mirip flex-col */
+    justify-content: center;
+    align-items: center;
+    gap: 1rem; /* Mirip gap-4 */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .admin-dashboard-nav {
+        flex-direction: row; /* Mirip sm:flex-row */
+    }
+}
+
+.admin-nav-button {
+    width: 100%; /* Mirip w-full */
+    text-align: center;
+    padding: 0.75rem 1.5rem; /* Mirip px-6 py-3 */
+    font-weight: 700; /* Mirip font-bold */
+    border-radius: 0.5rem; /* Mirip rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Mirip shadow-md */
+    transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    text-decoration: none;
+    display: inline-block; /* Agar padding dan margin berfungsi */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .admin-nav-button {
+        width: auto; /* Mirip sm:w-auto */
+    }
+}
+
+.primary-button {
+    background-color: #2563EB; /* Mirip bg-blue-600 */
+    color: white;
+}
+
+.primary-button:hover {
+    background-color: #1D4ED8; /* Mirip hover:bg-blue-700 */
+}
+
+.primary-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.5); /* Mirip focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 */
+}
+
+.calendar-button {
+    background-color: #8B5CF6; /* Mirip bg-purple-600 */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-button:hover {
+    background-color: #7C3AED; /* Mirip hover:bg-purple-700 */
+}
+
+.calendar-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.5); /* Mirip focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 */
+}
+
+.calendar-icon {
+    margin-right: 0.5rem; /* Mirip mr-2 */
+}
+
+.admin-stats-grid {
+    margin-top: 1.5rem; /* Mirip mt-6 */
+    display: grid;
+    grid-template-columns: 1fr; /* Mirip grid-cols-1 */
+    gap: 1rem; /* Mirip gap-4 */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .admin-stats-grid {
+        grid-template-columns: repeat(2, 1fr); /* Mirip sm:grid-cols-2 */
+    }
+}
+
+@media (min-width: 1024px) { /* lg: */
+    .admin-stats-grid {
+        grid-template-columns: repeat(4, 1fr); /* Mirip lg:grid-cols-4 */
+    }
+}
+
+.admin-stat-card {
+    background-color: white;
+    padding: 1rem; /* Mirip p-4 */
+    border-radius: 0.5rem; /* Mirip rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Mirip shadow-md */
+    text-align: center;
+    border: 1px solid #E5E7EB; /* Mirip border border-gray-200 */
+}
+
+.admin-stat-title {
+    font-size: 1rem; /* Mirip text-md */
+    font-weight: 600; /* Mirip font-semibold */
+    color: #374151; /* Mirip text-gray-700 */
+    margin-bottom: 0.5rem; /* Mirip mb-2 */
+}
+
+.admin-stat-value {
+    font-size: 2.25rem; /* Mirip text-3xl */
+    font-weight: 700; /* Mirip font-bold */
+    color: #2563EB; /* Mirip text-blue-600 */
+}
+
+/* Styling untuk loading dan error container */
+.admin-dashboard-loading-error-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F3F4F6; /* Mirip bg-gray-100 */
+}
+
+.admin-dashboard-loading-message {
+    color: #4B5563; /* Mirip text-gray-700 */
+    font-size: 1.125rem; /* Mirip text-lg */
+}
+
+.admin-dashboard-error-message {
+    color: #EF4444; /* Mirip text-red-500 */
+    font-size: 1.125rem; /* Mirip text-lg */
+}

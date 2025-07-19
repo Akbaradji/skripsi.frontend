@@ -1,136 +1,255 @@
+/* Hapus ini dari file CSS global Anda (misal App.css atau index.css) jika ada */
+/* body {
+    overflow: hidden; 
+} */
+
 .landing-container {
-  text-align: center;
-  padding: 60px 20px;
-  background: linear-gradient(to bottom right, #f7f9fc, #e9edf3);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    min-height: 100vh;
+    /* height: 100vh; */ /* Opsional, min-height lebih fleksibel */
+    display: flex;
+    flex-direction: column;
+    /* ⭐ PERBAIKAN: Gunakan space-between untuk mendorong elemen ke atas dan bawah */
+    justify-content: space-between; 
+    /* ⭐ PERBAIKAN: Gunakan align-items: center untuk memusatkan horizontal */
+    align-items: center; 
+    /* Gradien Warna Lebih Menarik */
+    background: linear-gradient(to bottom right, #4A90E2, #1E3A8A); /* Biru lebih cerah ke biru tua */
+    color: white;
+    padding: 2rem 1rem; /* ⭐ PERBAIKAN: Tambahkan padding atas/bawah yang lebih besar */
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden; /* Mencegah scroll internal jika konten terlalu besar */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .landing-container {
+        padding: 3rem 1.5rem; /* ⭐ PERBAIKAN: Padding lebih besar untuk desktop */
+    }
+}
+
+.landing-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* Overlay sedikit lebih gelap */
+    z-index: 0;
+}
+
+.top-right-buttons {
+    position: absolute;
+    top: 1rem; /* top-4 */
+    right: 1rem; /* right-4 */
+    z-index: 20; /* Z-index lebih tinggi agar tidak tertutup */
+    display: flex;
+    gap: 0.75rem; /* space-x-3 */
+}
+
+.btn-mahasiswa-login,
+.btn-registrasi {
+    padding: 0.5rem 1rem; /* px-4 py-2 */
+    font-weight: 600; /* font-semibold */
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+    transition: all 0.3s ease-in-out; /* transition duration-300 ease-in-out */
+    text-decoration: none; /* Remove underline for links */
+    font-size: 0.875rem; /* text-sm */
+    border: none; /* Pastikan tidak ada border default */
+}
+
+.btn-mahasiswa-login {
+    background-color: white;
+    color: #2563EB;
+}
+
+.btn-mahasiswa-login:hover {
+    background-color: #F3F4F6;
+    transform: translateY(-2px); /* Efek hover */
+}
+
+.btn-registrasi {
+    border: 2px solid white;
+    color: white;
+    background-color: transparent; /* Pastikan transparan */
+}
+
+.btn-registrasi:hover {
+    background-color: white;
+    color: #2563EB;
+    transform: translateY(-2px); /* Efek hover */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .top-right-buttons {
+        gap: 1rem;
+    }
+    .btn-mahasiswa-login,
+    .btn-registrasi {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+.main-content-wrapper {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 48rem; /* max-w-2xl */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem 1.5rem; /* Padding lebih konsisten */
+    animation: fadeInScale 1s ease-out forwards; /* Animasi masuk */
+    /* ⭐ PERBAIKAN: Gunakan margin-top/bottom auto untuk mendorong ke tengah vertikal */
+    margin-top: auto; 
+    margin-bottom: auto;
 }
 
 .logo-kominfo {
-  width: 120px;
-  margin-bottom: 20px;
+    width: 6rem;
+    height: 6rem;
+    margin-bottom: 1.5rem;
+}
+@media (min-width: 640px) { /* sm: */
+    .logo-kominfo {
+        width: 8rem;
+        height: 8rem;
+    }
 }
 
-h1 {
-  font-size: 2.5rem;
-  color: #2c3e50;
+.main-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Efek teks */
+}
+@media (min-width: 640px) { /* sm: */
+    .main-title {
+        font-size: 3rem;
+    }
 }
 
-h1 span {
-  color: #0077b6;
+.portal-magang-highlight {
+    color: #FFD700; /* Kuning emas lebih menarik */
 }
 
 .subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #34495e;
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    opacity: 0.95;
+}
+@media (min-width: 640px) { /* sm: */
+    .subtitle {
+        font-size: 1.25rem;
+    }
 }
 
-.desc {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 30px;
+.description {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    max-width: 65ch;
+    opacity: 0.85;
+}
+@media (min-width: 640px) { /* sm: */
+    .description {
+        font-size: 1.125rem;
+    }
 }
 
-.button-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
+.contact-info-card {
+    position: relative;
+    z-index: 10;
+    /* ⭐ PERBAIKAN: Hapus margin-top dan gunakan margin-bottom: 0 */
+    margin-top: 0; 
+    margin-bottom: 0; /* Pastikan menempel di bagian bawah padding container */
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.15); /* Opasitas sedikit lebih tinggi */
+    border-radius: 1rem; /* Rounded lebih besar */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.1); /* Shadow lebih menonjol */
+    padding: 1.5rem;
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+    backdrop-filter: blur(8px); /* Blur lebih kuat */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Border transparan */
+    animation: fadeInScale 1.2s ease-out forwards; /* Animasi masuk */
+    animation-delay: 0.2s; /* Delay sedikit */
+}
+@media (min-width: 640px) { /* sm: */
+    .contact-info-card {
+        padding: 2rem;
+    }
 }
 
-.btn-primary, .btn-secondary, .btn-link {
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: all 0.3s ease;
+.contact-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+@media (min-width: 640px) { /* sm: */
+    .contact-title {
+        font-size: 1.5rem;
+    }
 }
 
-.btn-primary {
-  background-color: #0077b6;
-  color: white;
+.contact-address,
+.contact-phone,
+.contact-email {
+    font-size: 0.9rem; /* Ukuran font lebih kecil */
+    margin-bottom: 0.5rem;
+    opacity: 0.85;
+}
+@media (min-width: 640px) { /* sm: */
+    .contact-address,
+    .contact-phone,
+    .contact-email {
+        font-size: 1rem; /* Ukuran font disesuaikan untuk desktop */
+    }
 }
 
-.btn-primary:hover {
-  background-color: #005f8e;
+.contact-icon {
+    display: inline-block;
+    margin-right: 0.5rem;
 }
 
-.btn-secondary {
-  background-color: #ff6b6b;
-  color: white;
+.contact-highlight {
+    font-weight: 600;
 }
-
-.btn-secondary:hover {
-  background-color: #d63f3f;
-}
-
-.btn-link {
-  color: #333;
-  text-decoration: underline;
-  padding: 10px;
-}
-
-.btn-link:hover {
-  color: #0077b6;
-}
-
-.contact-info {
-  margin-top: 40px;
-  padding: 25px 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  max-width: 600px;
-  width: 100%;
-}
-
-.contact-info h4 {
-  color: #2c3e50;
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-.contact-info p {
-  margin: 4px 0;
-  color: #444;
-  font-size: 0.95rem;
-}
-
-.contact-info .highlight {
-  color: #0077b6;
-  font-weight: 500;
-}
-
-.contact-info .icon {
-  margin-right: 8px;
-  color: #0077b6;
-}
-
 
 .admin-login-link {
-  position: fixed;
-  bottom: 15px;
-  right: 20px;
-  font-size: 0.9rem;
-  color: #888;
-  background-color: #fff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  text-decoration: none;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: all 0.3s ease;
-  z-index: 999;
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 10;
+    color: white;
+    font-size: 0.875rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    text-decoration: none;
+}
+@media (min-width: 640px) { /* sm: */
+    .admin-login-link {
+        font-size: 1rem;
+    }
 }
 
 .admin-login-link:hover {
-  color: #0077b6;
-  border-color: #0077b6;
+    opacity: 1;
+    text-decoration: underline;
+    transform: translateY(-2px);
 }
 
+/* Keyframe Animations */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

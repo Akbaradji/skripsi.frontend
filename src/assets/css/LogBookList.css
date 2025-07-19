@@ -1,0 +1,198 @@
+/* General container styles */
+.logbook-list-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.5rem; /* Equivalent to p-6 */
+    background-color: #F3F4F6; /* Equivalent to bg-gray-100 */
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif; /* Assuming Inter font is desired */
+}
+
+/* Responsive padding for larger screens */
+@media (min-width: 640px) { /* sm: breakpoint */
+    .logbook-list-container {
+        padding: 2rem; /* Equivalent to sm:p-8 */
+    }
+}
+
+/* Main title styles */
+.logbook-list-title {
+    font-size: 2.25rem; /* Equivalent to text-4xl */
+    font-weight: 800; /* Equivalent to font-extrabold */
+    margin-bottom: 2rem; /* Equivalent to mb-8 */
+    text-align: center;
+    color: #1F2937; /* Equivalent to text-gray-800 */
+}
+
+/* Empty state container and card */
+.logbook-empty-state-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 24rem; /* Equivalent to h-96 */
+}
+
+.logbook-empty-state-card {
+    background-color: white;
+    padding: 2rem; /* Equivalent to p-8 */
+    border-radius: 0.75rem; /* Equivalent to rounded-xl */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* Equivalent to shadow-lg */
+    text-align: center;
+    border: 1px solid #E5E7EB; /* Equivalent to border border-gray-200 */
+}
+
+.logbook-empty-state-message {
+    font-size: 1.25rem; /* Equivalent to text-xl */
+    color: #4B5563; /* Equivalent to text-gray-700 */
+    margin-bottom: 1.5rem; /* Equivalent to mb-6 */
+}
+
+.logbook-create-button {
+    background-color: #2563EB; /* Equivalent to bg-blue-600 */
+    color: white;
+    font-weight: 700; /* Equivalent to font-bold */
+    padding: 0.75rem 1.5rem; /* Equivalent to py-3 px-6 */
+    border-radius: 0.5rem; /* Equivalent to rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Equivalent to shadow-md */
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+
+.logbook-create-button:hover {
+    background-color: #1D4ED8; /* Equivalent to hover:bg-blue-700 */
+    transform: scale(1.05); /* Equivalent to hover:scale-105 */
+}
+
+/* Table Wrapper */
+.logbook-table-wrapper {
+    overflow-x: auto; /* Equivalent to overflow-x-auto */
+    background-color: white;
+    border-radius: 0.75rem; /* Equivalent to rounded-xl */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* Equivalent to shadow-lg */
+    border: 1px solid #E5E7EB; /* Equivalent to border border-gray-200 */
+}
+
+/* Table styles */
+.logbook-table {
+    min-width: 100%;
+    border-collapse: collapse;
+}
+
+.logbook-table-head {
+    background-color: #F9FAFB; /* Equivalent to bg-gray-50 */
+}
+
+.logbook-table-header {
+    padding: 0.75rem 1.5rem; /* px-6 py-3 */
+    text-align: center; /* ⭐ PERBAIKAN: Rata tengah header */
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 500; /* font-medium */
+    color: #6B7280; /* text-gray-500 */
+    text-transform: uppercase;
+    letter-spacing: 0.05em; /* tracking-wider */
+    border-bottom: 1px solid #E5E7EB; /* Garis bawah header */
+    border-right: 1px solid #E5E7EB; /* ⭐ PERBAIKAN: Garis vertikal */
+}
+
+/* Menghapus border-right pada header terakhir */
+.logbook-table-header:last-child {
+    border-right: none;
+}
+
+
+.logbook-table-body {
+    background-color: white;
+}
+
+.logbook-table-row:hover {
+    background-color: #F9FAFB; /* hover:bg-gray-50 */
+    transition: background-color 0.15s ease-in-out; /* transition-colors duration-150 */
+}
+
+.logbook-table-cell {
+    padding: 1rem 1.5rem; /* px-6 py-4 */
+    font-size: 0.875rem; /* text-sm */
+    color: #374151; /* text-gray-700 */
+    border-bottom: 1px solid #E5E7EB; /* Garis bawah cell */
+    border-right: 1px solid #E5E7EB; /* ⭐ PERBAIKAN: Garis vertikal */
+    text-align: center; /* ⭐ PERBAIKAN: Rata tengah cell */
+}
+
+/* Menghapus border-right pada cell terakhir di setiap baris */
+.logbook-table-cell:last-child {
+    border-right: none;
+}
+
+.logbook-table-cell-date {
+    white-space: nowrap; /* whitespace-nowrap */
+    font-weight: 500; /* font-medium */
+    color: #1F2937; /* text-gray-900 */
+}
+
+.logbook-table-cell-activity,
+.logbook-table-cell-notes {
+    max-width: 16rem; /* max-w-xs (adjust as needed for content) */
+    overflow: hidden;
+    text-overflow: ellipsis; /* truncate */
+    white-space: nowrap; /* truncate */
+}
+
+/* Status Badge Styles */
+.status-badge {
+    padding: 0.25rem 0.5rem; /* px-2 py-1 */
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.75rem; /* text-xs */
+    line-height: 1rem; /* leading-5 */
+    font-weight: 600; /* font-semibold */
+    border-radius: 9999px; /* rounded-full */
+}
+
+.status-text {
+    margin-left: 0.25rem; /* ml-1 */
+}
+
+/* Specific status colors */
+.status-pending {
+    background-color: #FEF3C7; /* bg-yellow-100 */
+    color: #92400E; /* text-yellow-800 */
+}
+
+.status-disetujui {
+    background-color: #D1FAE5; /* bg-green-100 */
+    color: #065F46; /* text-green-800 */
+}
+
+.status-ditolak {
+    background-color: #FEE2E2; /* bg-red-100 */
+    color: #991B1B; /* text-red-800 */
+}
+
+/* Loading and Error states */
+.logbook-loading-error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #F3F4F6; /* Equivalent to bg-gray-100 */
+}
+
+.logbook-loading-message {
+    font-size: 1.25rem; /* Equivalent to text-xl */
+    font-weight: 600; /* Equivalent to font-semibold */
+    color: #4B5563; /* Equivalent to text-gray-700 */
+}
+
+.logbook-error-message {
+    font-size: 1.25rem; /* Equivalent to text-xl */
+    font-weight: 600; /* Equivalent to font-semibold */
+    color: #DC2626; /* Equivalent to text-red-600 */
+}
+
+.logbook-error-card {
+    padding: 1rem; /* Equivalent to p-4 */
+    background-color: white;
+    border-radius: 0.5rem; /* Equivalent to rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Equivalent to shadow-md */
+}

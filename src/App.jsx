@@ -1,5 +1,9 @@
-import './App.css'
-import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+// src/App.jsx
+
+import './App.css'; // Tetap impor App.css
+import './index.css'; // Tetap impor index.css
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import AdminLogin from './components/AdminLogin';
 import AdminDashboard from './components/AdminDashboard';
 import UserDashboard from './components/user/UserDashboard';
@@ -10,43 +14,36 @@ import PengajuanList from './components/user/PengajuanList';
 import PengajuanDetail from './components/user/PengajuanDetail';
 import AdminPengajuanList from './components/AdminPengajuanList';
 import ProfilePage from './components/ProfilePage';
-import KalenderMagang from './components/KalenderMagang'; // Import KalenderMagang
+import KalenderMagang from './components/KalenderMagang';
 import LandingPage from './components/LandingPage';
+import LogbookList from './components/user/LogbookList';
+import LogbookForm from './components/user/LogbookForm';
 
-// Navbar sebagai komponen terpisah
-function Navbar() {
-  return (
-    <nav>
-      <Link to="/login-admin">Login Admin</Link> |{' '}
-      <Link to="/register-user">Register Mahasiswa</Link> |{' '}
-      <Link to="/login-user">Login Mahasiswa</Link> |{' '}
-      <Link to="/kalender-magang">Kalender Magang</Link> {/* Tambahkan link ke kalender magang */}
-    </nav>
-  );
-}
+// Impor komponen Navbar dari file terpisah
+import Navbar from './components/Navbar';
 
 // Layout mengontrol kapan navbar tampil berdasarkan path
 function Layout() {
   const location = useLocation();
+  // State untuk memicu refresh LogbookList
+  const [logbookRefreshKey, setLogbookRefreshKey] = useState(0);
 
-  // Path dimana navbar TIDAK tampil
-  const hideNavbarPaths = [
+  // Gunakan daftar pola untuk menyembunyikan Navbar
+  const hiddenPathsPatterns = [
     '/',
-    '/login-user',
-    '/register-user',
-    '/login-admin',
-    '/dashboard-admin',
-    '/dashboard-user',
-    '/pengajuan-baru',
-    '/daftar-pengajuan',
+    '/login',
+    '/register',
+    '/dashboard',
     '/admin/pengajuan',
-    '/kalender-magang', 
+    '/pengajuan',
+    '/kalender-magang',
+    '/profile',
+    '/logbook',
   ];
 
-  // Gunakan pattern matching
-  const shouldHideNavbar = hideNavbarPaths.includes(location.pathname)
-    || location.pathname.startsWith('/pengajuan/');
-
+  const shouldHideNavbar = hiddenPathsPatterns.some(pattern =>
+    location.pathname.startsWith(pattern)
+  );
 
   return (
     <>
@@ -63,7 +60,16 @@ function Layout() {
         <Route path="/pengajuan-baru" element={<PengajuanForm />} />
         <Route path="/daftar-pengajuan" element={<PengajuanList />} />
         <Route path="/pengajuan/:id" element={<PengajuanDetail />} />
-        <Route path="/kalender-magang" element={<KalenderMagang />} /> {/* Tambahkan rute untuk KalenderMagang */}
+        <Route path="/kalender-magang" element={<KalenderMagang />} />
+
+        {/* ⭐ Rute untuk Logbook (disesuaikan agar sesuai dengan Link di LogbookList.jsx) */}
+        <Route path="/logbook" element={<LogbookList />} /> {/* Untuk menampilkan daftar logbook */}
+        <Route path="/buat-logbook-baru" element={<LogbookForm />} /> {/* Untuk membuat logbook baru */}
+        <Route path="/logbook/:id" element={<LogbookForm />} /> {/* Untuk mengedit/melihat detail logbook */}
+
+        {/* Catatan: Rute /logbook/edit/:id dan /logbook/review/:id digabung menjadi /logbook/:id.
+           Logika edit/review/create ditangani di dalam LogbookForm berdasarkan ada/tidaknya ID di useParams().
+           Prop setLogbookRefreshKey dihapus karena navigate('/logbook') akan me-refresh LogbookList. */}
       </Routes>
     </>
   );

@@ -1,0 +1,162 @@
+.logbook-form-container {
+    min-height: 100vh;
+    background-color: #F3F4F6; /* Mirip bg-gray-100 */
+    padding: 1rem; /* Mirip p-4 */
+    font-family: 'Inter', sans-serif; /* Mirip font-inter */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 640px) { /* sm: */
+    .logbook-form-container {
+        padding: 1.5rem; /* Mirip sm:p-6 */
+    }
+}
+
+@media (min-width: 1024px) { /* lg: */
+    .logbook-form-container {
+        padding: 2rem; /* Mirip lg:p-8 */
+    }
+}
+
+.logbook-form-card {
+    max-width: 36rem; /* Mirip max-w-xl */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border-radius: 0.75rem; /* Mirip rounded-xl */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* Mirip shadow-lg */
+    padding: 1.5rem; /* Mirip p-6 */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .logbook-form-card {
+        padding: 2rem; /* Mirip sm:p-8 */
+    }
+}
+
+.logbook-form-title {
+    font-size: 1.5rem; /* Mirip text-2xl */
+    font-weight: 700; /* Mirip font-bold */
+    color: #1F2937; /* Mirip text-gray-800 */
+    margin-bottom: 1.5rem; /* Mirip mb-6 */
+    text-align: center;
+}
+
+@media (min-width: 768px) { /* md: */
+    .logbook-form-title {
+        font-size: 1.875rem; /* Mirip md:text-3xl */
+    }
+}
+
+.logbook-form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Mirip space-y-4 */
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem; /* Mirip text-sm */
+    font-weight: 500; /* Mirip font-medium */
+    color: #374151; /* Mirip text-gray-700 */
+    margin-bottom: 0.25rem; /* Mirip mb-1 */
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+    width: 100%;
+    padding: 0.5rem 1rem; /* Mirip px-4 py-2 */
+    border: 1px solid #D1D5DB; /* Mirip border border-gray-300 */
+    border-radius: 0.5rem; /* Mirip rounded-lg */
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #3B82F6; /* Mirip focus:border-blue-500 */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Mirip focus:ring-blue-500 */
+}
+
+.form-textarea {
+    resize: vertical; /* Mirip resize-y */
+}
+
+.form-input-disabled,
+.form-textarea-disabled {
+    background-color: #E5E7EB; /* Mirip bg-gray-100 */
+    cursor: not-allowed;
+}
+
+.submit-button,
+.back-button {
+    width: 100%;
+    padding: 0.5rem 1rem; /* py-2 px-4 */
+    border-radius: 0.5rem; /* rounded-lg */
+    font-weight: 600; /* font-semibold */
+    transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+    border: none;
+    cursor: pointer;
+    text-decoration: none; /* Untuk link */
+    display: inline-block; /* Untuk link */
+    text-align: center;
+}
+
+.submit-button {
+    background-color: #2563EB; /* Mirip bg-blue-600 */
+    color: white;
+    margin-top: 0.5rem; /* Untuk jarak dari form-group terakhir */
+}
+
+.submit-button:hover {
+    background-color: #1D4ED8; /* Mirip hover:bg-blue-700 */
+}
+
+.submit-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+.submit-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.back-button {
+    background-color: #D1D5DB; /* Mirip bg-gray-300 */
+    color: #1F2937; /* Mirip text-gray-800 */
+    margin-top: 0.5rem; /* mt-2 */
+}
+
+.back-button:hover {
+    background-color: #9CA3AF; /* Mirip hover:bg-gray-400 */
+}
+
+.back-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+/* Styling untuk loading dan error container */
+.logbook-form-loading-error-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F3F4F6;
+}
+
+.logbook-form-loading-message {
+    color: #4B5563;
+    font-size: 1.125rem;
+}
+
+.logbook-form-error-message {
+    color: #EF4444;
+    font-size: 1.125rem;
+}

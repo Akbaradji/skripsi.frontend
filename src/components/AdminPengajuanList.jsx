@@ -1,280 +1,384 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment'; 
+import '../assets/css/AdminPengajuanList.css'; 
 
 export default function AdminPengajuanList() {
-  const [pengajuan, setPengajuan] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [statusUpdate, setStatusUpdate] = useState({ id: null, status: '', catatan: '' });
-  const [updatingId, setUpdatingId] = useState(null);
-  const [selectedIds, setSelectedIds] = useState([]);
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [bidangMagangFilter, setBidangMagangFilter] = useState('');
+    const [pengajuan, setPengajuan] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [statusUpdate, setStatusUpdate] = useState({ id: null, status: '', catatan: '' });
+    const [updatingId, setUpdatingId] = useState(null);
+    const [selectedIds, setSelectedIds] = useState([]);
+    const [statusFilter, setStatusFilter] = useState('all');
+    const [bidangMagangFilter, setBidangMagangFilter] = useState('');
 
-  const fetchPengajuan = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:8000/api/admin/pengajuan', {
-        headers: { Authorization: `Bearer ${token}` },
-        params: {
-          status: statusFilter,
-          bidang_magang: bidangMagangFilter,
-        },
-      });
-      setPengajuan(res.data);
-    } catch (err) {
-      setError('Gagal memuat data pengajuan');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchPengajuan();
-  }, [statusFilter, bidangMagangFilter]);
-
-  const handleStatusFilterChange = (e) => setStatusFilter(e.target.value);
-  const handleBidangMagangFilterChange = (e) => setBidangMagangFilter(e.target.value);
-
-  const handleSelectAll = () => {
-    const newSelectedIds = pengajuan.map((item) => item.id);
-    setSelectedIds(newSelectedIds);
-  };
-
-  const handleSelectOne = (id) => {
-    setSelectedIds((prevSelectedIds) =>
-      prevSelectedIds.includes(id)
-        ? prevSelectedIds.filter((itemId) => itemId !== id)
-        : [...prevSelectedIds, id]
-    );
-  };
-
-  const [role, setRole] = useState(null);
-
-  useEffect(() => {
-    const fetchRole = async () => {
-      const token = localStorage.getItem('token');
-      try {
-        const res = await axios.get('http://localhost:8000/api/me', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setRole(res.data.role); // pastikan API `/me` return field `role`
-      } catch (err) {
-        console.error('Gagal mengambil role user:', err.response?.data || err.message);
-      }
+    const fetchPengajuan = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                setError('Token tidak ditemukan. Silakan login.');
+                setLoading(false);
+                return;
+            }
+            const res = await axios.get('http://localhost:8000/api/admin/pengajuan', {
+                headers: { Authorization: `Bearer ${token}` },
+                params: {
+                    status: statusFilter,
+                    bidang_magang: bidangMagangFilter,
+                },
+            });
+            setPengajuan(res.data);
+        } catch (err) {
+            console.error("Error fetching admin pengajuan list:", err.response?.data || err.message);
+            setError('Gagal memuat data pengajuan.');
+        } finally {
+            setLoading(false);
+        }
     };
 
-    fetchRole();
-  }, []);
+    useEffect(() => {
+        fetchPengajuan();
+    }, [statusFilter, bidangMagangFilter]); // Re-fetch when filters change
+
+    const handleStatusFilterChange = (e) => setStatusFilter(e.target.value);
+    const handleBidangMagangFilterChange = (e) => setBidangMagangFilter(e.target.value);
+
+    const handleSelectAll = () => {
+        if (selectedIds.length === pengajuan.length) {
+            setSelectedIds([]);
+        } else {
+            const newSelectedIds = pengajuan.map((item) => item.id);
+            setSelectedIds(newSelectedIds);
+        }
+    };
+
+    const handleSelectOne = (id) => {
+        setSelectedIds((prevSelectedIds) =>
+            prevSelectedIds.includes(id)
+                ? prevSelectedIds.filter((itemId) => itemId !== id)
+                : [...prevSelectedIds, id]
+        );
+    };
+
+    const handleBulkAction = async (status) => {
+        if (selectedIds.length === 0) {
+            toast.warn('Pilih pengajuan terlebih dahulu.', { position: "top-right" });
+            return;
+        }
+        if (!window.confirm(`Yakin ingin memperbarui status ${selectedIds.length} pengajuan menjadi ${status}?`)) {
+            return;
+        }
+        try {
+            const token = localStorage.getItem('token');
+            await axios.put(
+                'http://localhost:8000/api/admin/pengajuan/bulk-update-status',
+                { ids: selectedIds, status },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            toast.success('Status pengajuan berhasil diperbarui secara massal!', { position: "top-right" });
+            setSelectedIds([]); // Clear selection after bulk update
+            fetchPengajuan();
+        } catch (err) {
+            console.error("Error bulk updating status:", err.response?.data || err.message);
+            toast.error('Gagal memperbarui status pengajuan secara massal.', { position: "top-right" });
+        }
+    };
+
+    const openUpdateForm = (id, currentStatus, currentCatatan) => {
+        setStatusUpdate({ id, status: currentStatus, catatan: currentCatatan || '' });
+    };
+
+    const handleStatusChange = (e) => {
+        setStatusUpdate((prev) => ({ ...prev, status: e.target.value }));
+    };
+
+    const handleCatatanChange = (e) => {
+        setStatusUpdate((prev) => ({ ...prev, catatan: e.target.value }));
+    };
+
+    const submitStatusUpdate = async () => {
+        if (!statusUpdate.status) {
+            toast.warn('Pilih status terlebih dahulu.', { position: "top-right" });
+            return;
+        }
+        setUpdatingId(statusUpdate.id);
+        try {
+            const token = localStorage.getItem('token');
+            await axios.put(
+                `http://localhost:8000/api/pengajuan/${statusUpdate.id}/status`,
+                { status: statusUpdate.status, catatan: statusUpdate.catatan },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            toast.success('Status berhasil diperbarui!', { position: "top-right" });
+            setStatusUpdate({ id: null, status: '', catatan: '' });
+            fetchPengajuan();
+        } catch (err) {
+            console.error("Error updating single status:", err.response?.data || err.message);
+            toast.error('Gagal memperbarui status.', { position: "top-right" });
+        } finally {
+            setUpdatingId(null);
+        }
+    };
+
+    // ⭐ FUNGSI handleDelete YANG SUDAH Disesuaikan untuk Admin
+    const handleDelete = async (id, status) => {
+        // Ambil peran pengguna dari localStorage
+        const userRole = localStorage.getItem('role'); 
+
+        // Logika ini mencegah penghapusan jika status bukan 'pending' HANYA untuk mahasiswa
+        if (userRole === 'mahasiswa' && status !== 'pending') {
+            toast.warn('Pengajuan yang sudah diproses tidak bisa dihapus oleh mahasiswa.', { position: "top-right" });
+            return;
+        }
+        // Admin dapat menghapus kapan saja, jadi tidak ada pengecekan status di sini untuk admin.
+
+        if (!window.confirm('Yakin ingin menghapus pengajuan ini?')) return;
+
+        try {
+            const token = localStorage.getItem('token');
+            await axios.delete(`http://localhost:8000/api/pengajuan/${id}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            toast.success('Pengajuan berhasil dihapus!', { position: "top-right" });
+            fetchPengajuan();
+        } catch (err) {
+            console.error("Error deleting pengajuan:", err.response?.data || err.message);
+            toast.error('Gagal menghapus pengajuan: ' + (err.response?.data?.message || 'Unknown error'), { position: "top-right" });
+        }
+    };
+
+    // Fungsi untuk mengunggah bukti selesai magang
+    const handleUploadProof = async (pengajuanId) => {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'application/pdf';
+        fileInput.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('pengajuan_id', pengajuanId);
+            formData.append('proof_file', file);
+
+            try {
+                const token = localStorage.getItem('token');
+                await axios.post('http://localhost:8000/api/admin/upload-internship-proof', formData, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                toast.success('Bukti selesai magang berhasil diunggah!', { position: "top-right" });
+                fetchPengajuan(); // Refresh data untuk menampilkan URL bukti baru
+            } catch (error) {
+                console.error("Error uploading proof:", error.response?.data || error.message);
+                toast.error('Gagal mengunggah bukti selesai magang: ' + (error.response?.data?.message || 'Unknown error'), { position: "top-right" });
+            }
+        };
+        fileInput.click(); // Memicu dialog pemilihan file
+    };
 
 
-  const handleBulkAction = async (status) => {
-    if (selectedIds.length === 0) {
-      alert('Pilih pengajuan terlebih dahulu');
-      return;
-    }
-    try {
-      const token = localStorage.getItem('token');
-      await axios.put(
-        'http://localhost:8000/api/admin/pengajuan/bulk-update-status',
-        { ids: selectedIds, status },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert('Status pengajuan berhasil diperbarui');
-      fetchPengajuan();
-    } catch (err) {
-      alert('Gagal memperbarui status pengajuan');
-    }
-  };
+    if (loading) return (
+        <div className="admin-pengajuan-list-loading-error-container">
+            <p className="admin-pengajuan-list-loading-message">Loading...</p>
+        </div>
+    );
+    if (error) return (
+        <div className="admin-pengajuan-list-loading-error-container">
+            <p className="admin-pengajuan-list-error-message">{error}</p>
+        </div>
+    );
+    if (pengajuan.length === 0) return (
+        <div className="admin-pengajuan-list-empty-container">
+            <div className="admin-pengajuan-list-empty-card">
+                <p className="admin-pengajuan-list-empty-message">Tidak ada pengajuan ditemukan.</p>
+            </div>
+        </div>
+    );
 
-  const openUpdateForm = (id, currentStatus) => {
-    setStatusUpdate({ id, status: currentStatus, catatan: '' });
-  };
+    return (
+        <div className="admin-pengajuan-list-container">
+            <div className="admin-pengajuan-list-card">
+                <h2 className="admin-pengajuan-list-title">Daftar Pengajuan Magang (Admin)</h2>
 
-  const handleStatusChange = (e) => {
-    setStatusUpdate((prev) => ({ ...prev, status: e.target.value }));
-  };
+                {/* Filter dan Bulk Action */}
+                <div className="admin-filter-bulk-container">
+                    <div className="admin-filter-group">
+                        <select
+                            onChange={handleStatusFilterChange}
+                            value={statusFilter}
+                            className="admin-filter-select"
+                        >
+                            <option value="all">Semua Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="disetujui">Disetujui</option>
+                            <option value="ditolak">Ditolak</option>
+                        </select>
 
-  const handleCatatanChange = (e) => {
-    setStatusUpdate((prev) => ({ ...prev, catatan: e.target.value }));
-  };
+                        <input
+                            type="text"
+                            placeholder="Filter Bidang Magang"
+                            value={bidangMagangFilter}
+                            onChange={handleBidangMagangFilterChange}
+                            className="admin-filter-input"
+                        />
+                    </div>
 
-  const submitStatusUpdate = async () => {
-    if (!statusUpdate.status) {
-      alert('Pilih status terlebih dahulu');
-      return;
-    }
-    setUpdatingId(statusUpdate.id);
-    try {
-      const token = localStorage.getItem('token');
-      await axios.put(
-        `http://localhost:8000/api/pengajuan/${statusUpdate.id}/status`,
-        { status: statusUpdate.status, catatan: statusUpdate.catatan },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert('Status berhasil diperbarui');
-      setStatusUpdate({ id: null, status: '', catatan: '' });
-      fetchPengajuan();
-    } catch (err) {
-      alert('Gagal memperbarui status');
-    } finally {
-      setUpdatingId(null);
-    }
-  };
+                    <div className="admin-bulk-action-group">
+                        <button
+                            onClick={() => handleBulkAction('disetujui')}
+                            className="admin-bulk-button approve-button"
+                            disabled={selectedIds.length === 0}
+                        >
+                            Setujui Dipilih
+                        </button>
+                        <button
+                            onClick={() => handleBulkAction('ditolak')}
+                            className="admin-bulk-button reject-button"
+                            disabled={selectedIds.length === 0}
+                        >
+                            Tolak Dipilih
+                        </button>
+                    </div>
+                </div>
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Yakin ingin menghapus pengajuan ini?')) return;
-
-    try {
-      const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:8000/api/pengajuan/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      alert('Pengajuan berhasil dihapus');
-      fetchPengajuan();
-    } catch (err) {
-      alert('Gagal menghapus pengajuan: ' + (err.response?.data?.message || 'Unknown error'));
-    }
-  };
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-  if (pengajuan.length === 0) return <div>Tidak ada pengajuan ditemukan.</div>;
-
-  return (
-    <div style={{ maxWidth: 900, margin: 'auto', padding: '20px' }}>
-      <h2>Daftar Pengajuan Magang (Admin)</h2>
-
-      <div style={{ marginBottom: 20 }}>
-        <select onChange={handleStatusFilterChange} value={statusFilter}>
-          <option value="all">Semua Status</option>
-          <option value="pending">Pending</option>
-          <option value="disetujui">Disetujui</option>
-          <option value="ditolak">Ditolak</option>
-        </select>
-
-        <input
-          type="text"
-          placeholder="Filter Bidang Magang"
-          value={bidangMagangFilter}
-          onChange={handleBidangMagangFilterChange}
-        />
-      </div>
-
-      <div style={{ marginBottom: 20 }}>
-        <button onClick={() => handleBulkAction('disetujui')}>Setujui</button>
-        <button onClick={() => handleBulkAction('ditolak')}>Tolak</button>
-      </div>
-
-      <table border="1" cellPadding="8" style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                onChange={handleSelectAll}
-                checked={selectedIds.length === pengajuan.length}
-              />
-            </th>
-            <th>Nama Pengaju</th>
-            <th>Email Pengaju</th>
-            <th>Bidang Magang</th>
-            <th>Tanggal Mulai</th>
-            <th>Tanggal Selesai</th>
-            <th>Status</th>
-            <th>Catatan</th>
-            <th>File PDF</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pengajuan.map((item) => (
-            <tr key={item.id}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedIds.includes(item.id)}
-                  onChange={() => handleSelectOne(item.id)}
-                />
-              </td>
-              <td>{item.nama_pengaju}</td>
-              <td>{item.email_pengaju}</td>
-              <td>{item.bidang_magang}</td>
-              <td>{item.tanggal_mulai}</td>
-              <td>{item.tanggal_selesai}</td>
-              <td>{item.status}</td>
-              <td>{item.catatan || '-'}</td>
-              <td>
-                {item.pdf_pengajuan ? (
-                  <a href={item.pdf_pengajuan} target="_blank" rel="noopener noreferrer">
-                    Lihat PDF
-                  </a>
-                ) : (
-                  'Tidak ada file'
-                )}
-              </td>
-              <td>
-                {statusUpdate.id === item.id ? (
-                  <div>
-                    <select value={statusUpdate.status} onChange={handleStatusChange}>
-                      <option value="">Pilih Status</option>
-                      <option value="disetujui">Disetujui</option>
-                      <option value="ditolak">Ditolak</option>
-                    </select>
-                    <textarea
-                      placeholder="Catatan (opsional)"
-                      value={statusUpdate.catatan}
-                      onChange={handleCatatanChange}
-                      rows={3}
-                      style={{ width: '100%', marginTop: 5 }}
-                    />
-                    <button onClick={submitStatusUpdate} disabled={updatingId === item.id}>
-                      {updatingId === item.id ? 'Menyimpan...' : 'Simpan'}
-                    </button>
-                    <button
-                      onClick={() => setStatusUpdate({ id: null, status: '', catatan: '' })}
-                      style={{ marginLeft: 5 }}
-                      disabled={updatingId === item.id}
-                    >
-                      Batal
-                    </button>
-                  </div>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => openUpdateForm(item.id, item.status)}
-                      style={{
-                        color: 'blue',
-                        border: 'none',
-                        padding: '6px 10px',
-                        cursor: 'pointer',
-                        borderRadius: '4px'
-                      }}
-                      title="Update Status"
-                    >
-                      ✏️ Update
-                    </button>
-                    <button
-                      onClick={() => handleDelete(item.id)}
-                      style={{
-                        marginLeft: 5,
-                        color: 'red',
-                        border: 'none',
-                        padding: '6px 10px',
-                        cursor: 'pointer',
-                        borderRadius: '4px'
-                      }}
-                      title="Hapus Pengajuan"
-                    >
-                      🗑️ Hapus
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+                {/* Tabel Responsif */}
+                <div className="admin-pengajuan-table-wrapper">
+                    <table className="admin-pengajuan-table">
+                        <thead>
+                            <tr>
+                                <th className="admin-table-header checkbox-header">
+                                    <input
+                                        type="checkbox"
+                                        onChange={handleSelectAll}
+                                        checked={selectedIds.length === pengajuan.length && pengajuan.length > 0}
+                                        className="admin-checkbox"
+                                    />
+                                </th>
+                                <th className="admin-table-header">Nama Pengaju</th>
+                                <th className="admin-table-header">Email Pengaju</th>
+                                <th className="admin-table-header">Bidang Magang</th>
+                                <th className="admin-table-header">Tanggal Mulai</th>
+                                <th className="admin-table-header">Tanggal Selesai</th>
+                                <th className="admin-table-header">Status</th>
+                                <th className="admin-table-header">Catatan</th>
+                                <th className="admin-table-header">Dokumen Pengajuan</th>
+                                <th className="admin-table-header">Bukti Selesai</th> {/* Kolom baru */}
+                                <th className="admin-table-header action-header">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {pengajuan.map((item) => (
+                                <tr key={item.id} className="admin-table-row">
+                                    <td className="admin-table-cell checkbox-cell">
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedIds.includes(item.id)}
+                                            onChange={() => handleSelectOne(item.id)}
+                                            className="admin-checkbox"
+                                        />
+                                    </td>
+                                    <td className="admin-table-cell">{item.nama_pengaju}</td>
+                                    <td className="admin-table-cell">{item.email_pengaju}</td>
+                                    <td className="admin-table-cell">{item.bidang_magang}</td>
+                                    <td className="admin-table-cell">{moment(item.tanggal_mulai).format('DD MMM YYYY')}</td>
+                                    <td className="admin-table-cell">{moment(item.tanggal_selesai).format('DD MMM YYYY')}</td>
+                                    <td className="admin-table-cell">
+                                        <span className={`status-badge status-${item.status}`}>
+                                            {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                                        </span>
+                                    </td>
+                                    <td className="admin-table-cell">{item.catatan || '-'}</td>
+                                    <td className="admin-table-cell">
+                                        {item.pdf_pengajuan ? (
+                                            <a href={item.pdf_pengajuan} target="_blank" rel="noopener noreferrer" className="pdf-link">
+                                                Lihat PDF
+                                            </a>
+                                        ) : (
+                                            <span className="no-file-text">Tidak ada file</span>
+                                        )}
+                                    </td>
+                                    {/* Kolom untuk Bukti Selesai Magang */}
+                                    <td className="admin-table-cell">
+                                        {item.bukti_selesai_magang_url ? (
+                                            <a href={item.bukti_selesai_magang_url} target="_blank" rel="noopener noreferrer" className="pdf-link">
+                                                Lihat Bukti
+                                            </a>
+                                        ) : (
+                                            <button
+                                                onClick={() => handleUploadProof(item.id)}
+                                                className="upload-proof-button"
+                                            >
+                                                Upload Bukti
+                                            </button>
+                                        )}
+                                    </td>
+                                    <td className="admin-table-cell action-cell">
+                                        {statusUpdate.id === item.id ? (
+                                            <div className="admin-update-form-container">
+                                                <select
+                                                    value={statusUpdate.status}
+                                                    onChange={handleStatusChange}
+                                                    className="admin-update-select"
+                                                >
+                                                    <option value="">Pilih Status</option>
+                                                    <option value="disetujui">Disetujui</option>
+                                                    <option value="ditolak">Ditolak</option>
+                                                </select>
+                                                <textarea
+                                                    placeholder="Catatan (opsional)"
+                                                    value={statusUpdate.catatan}
+                                                    onChange={handleCatatanChange}
+                                                    rows={2}
+                                                    className="admin-update-textarea"
+                                                />
+                                                <div className="admin-update-buttons">
+                                                    <button
+                                                        onClick={submitStatusUpdate}
+                                                        disabled={updatingId === item.id}
+                                                        className="admin-update-button save-button"
+                                                    >
+                                                        {updatingId === item.id ? 'Menyimpan...' : 'Simpan'}
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setStatusUpdate({ id: null, status: '', catatan: '' })}
+                                                        disabled={updatingId === item.id}
+                                                        className="admin-update-button cancel-button"
+                                                    >
+                                                        Batal
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="admin-action-buttons-container">
+                                                <button
+                                                    onClick={() => openUpdateForm(item.id, item.status, item.catatan)}
+                                                    className="admin-action-button update-button"
+                                                    title="Update Status"
+                                                >
+                                                    ✏️ Update
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(item.id, item.status)}
+                                                    className="admin-action-button delete-button"
+                                                    title="Hapus Pengajuan"
+                                                >
+                                                    🗑️ Hapus
+                                                </button>
+                                            </div>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <ToastContainer />
+        </div>
+    );
 }

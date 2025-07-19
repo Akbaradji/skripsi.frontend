@@ -1,0 +1,158 @@
+/* src/assets/css/PengajuanForm.css */
+
+.pengajuan-form-container {
+    min-height: 100vh;
+    background-color: #F3F4F6; /* Mirip bg-gray-100 */
+    padding: 1rem; /* Mirip p-4 */
+    font-family: 'Inter', sans-serif; /* Mirip font-inter */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 640px) { /* sm: */
+    .pengajuan-form-container {
+        padding: 1.5rem; /* Mirip sm:p-6 */
+    }
+}
+
+@media (min-width: 1024px) { /* lg: */
+    .pengajuan-form-container {
+        padding: 2rem; /* Mirip lg:p-8 */
+    }
+}
+
+.pengajuan-form-card {
+    max-width: 28rem; /* Mirip max-w-md */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border-radius: 0.75rem; /* Mirip rounded-xl */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* Mirip shadow-lg */
+    padding: 1.5rem; /* Mirip p-6 */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .pengajuan-form-card {
+        padding: 2rem; /* Mirip sm:p-8 */
+    }
+}
+
+.pengajuan-form-title {
+    font-size: 1.5rem; /* Mirip text-2xl */
+    font-weight: 700; /* Mirip font-bold */
+    color: #1F2937; /* Mirip text-gray-800 */
+    margin-bottom: 1.5rem; /* Mirip mb-6 */
+    text-align: center;
+}
+
+@media (min-width: 768px) { /* md: */
+    .pengajuan-form-title {
+        font-size: 1.875rem; /* Mirip md:text-3xl */
+    }
+}
+
+.pengajuan-form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Mirip space-y-4 */
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem; /* Mirip text-sm */
+    font-weight: 500; /* Mirip font-medium */
+    color: #374151; /* Mirip text-gray-700 */
+    margin-bottom: 0.25rem; /* Mirip mb-1 */
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.5rem 1rem; /* Mirip px-4 py-2 */
+    border: 1px solid #D1D5DB; /* Mirip border border-gray-300 */
+    border-radius: 0.5rem; /* Mirip rounded-lg */
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #3B82F6; /* Mirip focus:border-blue-500 */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Mirip focus:ring-blue-500 */
+}
+
+.form-file-input {
+    width: 100%;
+    font-size: 0.875rem; /* Mirip text-sm */
+    color: #4B5563; /* Mirip text-gray-500 */
+    padding-top: 0.5rem; /* Untuk menyelaraskan dengan input lain */
+    padding-bottom: 0.5rem; /* Untuk menyelaraskan dengan input lain */
+}
+
+.form-file-input::-webkit-file-upload-button {
+    margin-right: 1rem; /* Mirip file:mr-4 */
+    padding: 0.5rem 1rem; /* Mirip file:py-2 file:px-4 */
+    border-radius: 0.5rem; /* Mirip file:rounded-lg */
+    border: 0; /* Mirip file:border-0 */
+    font-size: 0.875rem; /* Mirip file:text-sm */
+    font-weight: 600; /* Mirip file:font-semibold */
+    background-color: #EFF6FF; /* Mirip file:bg-blue-50 */
+    color: #1E40AF; /* Mirip file:text-blue-700 */
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.form-file-input::file-selector-button { /* Standard property for modern browsers */
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background-color: #EFF6FF;
+    color: #1E40AF;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.form-file-input::-webkit-file-upload-button:hover,
+.form-file-input::file-selector-button:hover {
+    background-color: #DBEAFE; /* Mirip hover:file:bg-blue-100 */
+}
+
+
+.submit-button {
+    width: 100%;
+    background-color: #2563EB; /* Mirip bg-blue-600 */
+    color: white;
+    padding: 0.5rem 1rem; /* py-2 px-4 */
+    border-radius: 0.5rem; /* rounded-lg */
+    font-weight: 600; /* font-semibold */
+    transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #1D4ED8; /* Mirip hover:bg-blue-700 */
+}
+
+.submit-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.5); /* Mirip focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 */
+}
+
+.submit-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.form-message {
+    font-size: 0.875rem; /* Mirip text-sm */
+    margin-top: 1rem; /* Mirip mt-4 */
+    text-align: center;
+}
+
+.error-message {
+    color: #EF4444; /* Mirip text-red-500 */
+}

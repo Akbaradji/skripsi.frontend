@@ -1,0 +1,250 @@
+/* src/assets/css/PengajuanList.css */
+
+.pengajuan-list-container {
+    min-height: 100vh;
+    background-color: #F3F4F6; /* bg-gray-100 */
+    padding: 1rem; /* p-4 */
+    font-family: 'Inter', sans-serif; /* font-inter */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .pengajuan-list-container {
+        padding: 1.5rem; /* sm:p-6 */
+    }
+}
+
+@media (min-width: 1024px) { /* lg: */
+    .pengajuan-list-container {
+        padding: 2rem; /* lg:p-8 */
+    }
+}
+
+.pengajuan-list-card {
+    max-width: 96rem; /* max-w-6xl */
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* shadow-lg */
+    padding: 1.5rem; /* p-6 */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .pengajuan-list-card {
+        padding: 2rem; /* sm:p-8 */
+    }
+}
+
+.pengajuan-list-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 700; /* font-bold */
+    color: #1F2937; /* text-gray-800 */
+    margin-bottom: 1.5rem; /* mb-6 */
+    text-align: center;
+}
+
+@media (min-width: 768px) { /* md: */
+    .pengajuan-list-title {
+        font-size: 1.875rem; /* md:text-3xl */
+    }
+}
+
+/* Styling untuk tampilan "Tidak ada pengajuan ditemukan" */
+.pengajuan-list-empty-container {
+    min-height: 100vh;
+    background-color: #F3F4F6;
+    padding: 1rem;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pengajuan-list-empty-card {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    text-align: center;
+    max-width: 28rem;
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .pengajuan-list-empty-card {
+        padding: 2rem;
+    }
+}
+
+.pengajuan-list-empty-message {
+    color: #4B5563; /* text-gray-600 */
+    font-size: 1.125rem; /* text-lg */
+    margin-bottom: 1rem;
+}
+
+.pengajuan-list-create-button {
+    margin-top: 1rem; /* mt-4 */
+    display: inline-block;
+    padding: 0.75rem 1.5rem; /* px-6 py-3 */
+    background-color: #2563EB; /* bg-blue-600 */
+    color: white;
+    font-weight: 700; /* font-bold */
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+    transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    text-decoration: none;
+}
+
+.pengajuan-list-create-button:hover {
+    background-color: #1D4ED8; /* hover:bg-blue-700 */
+}
+
+.pengajuan-list-create-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.5); /* focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 */
+}
+
+/* Styling untuk tabel */
+.pengajuan-table-wrapper {
+    overflow-x: auto;
+    border-radius: 0.5rem; /* rounded-lg */
+    border: 1px solid #E5E7EB; /* border border-gray-200 */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); /* shadow-sm */
+}
+
+.pengajuan-table {
+    min-width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.pengajuan-table thead {
+    background-color: #F9FAFB; /* bg-gray-50 */
+}
+
+.table-header {
+    padding: 0.75rem 1rem; /* px-4 py-3 */
+    text-align: left;
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 500; /* font-medium */
+    color: #6B7280; /* text-gray-500 */
+    text-transform: uppercase;
+    letter-spacing: 0.05em; /* tracking-wider */
+    border-bottom: 1px solid #E5E7EB; /* divide-y divide-gray-200 */
+}
+
+.action-header {
+    text-align: center;
+}
+
+.pengajuan-table tbody {
+    background-color: white;
+    border-bottom: 1px solid #E5E7EB; /* divide-y divide-gray-200 */
+}
+
+.table-row:hover {
+    background-color: #F9FAFB; /* hover:bg-gray-50 */
+}
+
+.table-cell {
+    padding: 0.75rem 1rem; /* px-4 py-3 */
+    white-space: nowrap; /* whitespace-nowrap */
+    font-size: 0.875rem; /* text-sm */
+    color: #374151; /* text-gray-700 */
+}
+
+.table-cell:first-child {
+    font-weight: 500; /* font-medium */
+    color: #1F2937; /* text-gray-900 */
+}
+
+.status-badge {
+    padding: 0.125rem 0.5rem; /* px-2 py-0.5 */
+    display: inline-flex;
+    font-size: 0.75rem; /* text-xs */
+    line-height: 1.25rem; /* leading-5 */
+    font-weight: 600; /* font-semibold */
+    border-radius: 9999px; /* rounded-full */
+}
+
+.status-badge.status-disetujui {
+    background-color: #D1FAE5; /* bg-green-100 */
+    color: #065F46; /* text-green-800 */
+}
+
+.status-badge.status-ditolak {
+    background-color: #FEE2E2; /* bg-red-100 */
+    color: #991B1B; /* text-red-800 */
+}
+
+.status-badge.status-pending {
+    background-color: #FEF3C7; /* bg-yellow-100 */
+    color: #92400E; /* text-yellow-800 */
+}
+
+.pdf-link {
+    color: #2563EB; /* text-blue-600 */
+    text-decoration: underline;
+}
+
+.pdf-link:hover {
+    color: #1D4ED8; /* hover:text-blue-800 */
+}
+
+.no-file-text {
+    color: #6B7280; /* text-gray-500 */
+}
+
+.action-cell {
+    text-align: center;
+    font-weight: 500; /* font-medium */
+}
+
+.action-buttons-container {
+    display: flex;
+    flex-direction: column; /* flex-col */
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem; /* gap-2 */
+}
+
+@media (min-width: 640px) { /* sm: */
+    .action-buttons-container {
+        flex-direction: row; /* sm:flex-row */
+    }
+}
+
+.action-link,
+.action-button {
+    padding: 0.25rem 0.75rem; /* px-3 py-1 */
+    border-radius: 0.375rem; /* rounded-md */
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 600; /* font-semibold */
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+    text-decoration: none; /* For links */
+    cursor: pointer;
+    border: none;
+}
+
+.action-link {
+    color: #2563EB; /* text-blue-600 */
+}
+
+.action-link:hover {
+    color: #1D4ED8; /* hover:text-blue-800 */
+}
+
+.delete-button {
+    background-color: #DC2626; /* bg-red-600 */
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #B91C1C; /* hover:bg-red-700 */
+}
+
+.disabled-button {
+    background-color: #D1D5DB; /* bg-gray-300 */
+    cursor: not-allowed;
+    opacity: 0.7; /* Optional: make it slightly transparent */
+}
