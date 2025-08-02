@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom'; // ⭐ Tambahkan useNavigate
+import { Link, useNavigate } from 'react-router-dom'; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment'; 
@@ -10,7 +10,7 @@ export default function PengajuanList() {
     const [pengajuan, setPengajuan] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate(); // ⭐ Inisialisasi useNavigate
+    const navigate = useNavigate();
 
     const fetchPengajuan = async () => {
         try {
@@ -44,8 +44,9 @@ export default function PengajuanList() {
             return;
         }
 
+        
         if (!window.confirm('Yakin ingin menghapus pengajuan ini?')) {
-            return;
+             return;
         }
 
         try {
@@ -58,6 +59,44 @@ export default function PengajuanList() {
         } catch (err) {
             console.error("Error deleting pengajuan:", err.response?.data || err.message);
             toast.error('Gagal menghapus pengajuan.', { position: "top-right" });
+        }
+    };
+
+    // Menangani unduhan file
+    const handleDownload = async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            // Menggunakan nama rute yang sama dengan yang dibuat di backend
+            const res = await axios.get(`http://localhost:8000/api/pengajuan/${id}/download-bukti-selesai`, {
+                responseType: 'blob', // Penting untuk mengunduh file
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            
+            // Membuat objek URL dari blob respons
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            
+            // Ambil nama file dari header Content-Disposition jika tersedia
+            const contentDisposition = res.headers['content-disposition'];
+            let fileName = `bukti_selesai_${id}.pdf`; // Nama file default jika header tidak ada
+            if (contentDisposition) {
+                const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+                if (fileNameMatch && fileNameMatch.length === 2) {
+                    fileName = fileNameMatch[1];
+                }
+            }
+            
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+            
+            toast.success('File berhasil diunduh!', { position: "top-right" });
+        } catch (err) {
+            console.error("Error downloading file:", err.response?.data || err.message);
+            toast.error('Gagal mengunduh file. File mungkin tidak tersedia.', { position: "top-right" });
         }
     };
 
@@ -75,33 +114,17 @@ export default function PengajuanList() {
         <div className="pengajuan-list-container">
             <div className="pengajuan-list-card">
                 <h2 className="pengajuan-list-title">Daftar Pengajuan Magang</h2>
-
-                {/* ⭐ Container untuk tombol aksi (Buat Baru & Kembali) */}
                 <div className="pengajuan-actions-container">
-                    <Link
-                        to="/pengajuan-baru"
-                        className="pengajuan-list-create-button"
-                    >
+                    <Link to="/pengajuan-baru" className="pengajuan-list-create-button">
                         Buat Pengajuan Baru
                     </Link>
-                    <button
-                        onClick={() => navigate('/dashboard-user')} // ⭐ Tombol ini mengarah ke /dashboard-user
-                        className="pengajuan-back-button"
-                    >
+                    <button onClick={() => navigate('/dashboard-user')} className="pengajuan-back-button">
                         Kembali
                     </button>
                 </div>
-
                 <div className="pengajuan-list-empty-container">
                     <div className="pengajuan-list-empty-card">
                         <p className="pengajuan-list-empty-message">Tidak ada pengajuan ditemukan.</p>
-                        {/* Tombol di sini akan dihapus karena sudah ada di atas */}
-                        {/* <Link
-                            to="/pengajuan-baru"
-                            className="pengajuan-list-create-button"
-                        >
-                            Buat Pengajuan Baru
-                        </Link> */}
                     </div>
                 </div>
             </div>
@@ -113,24 +136,14 @@ export default function PengajuanList() {
         <div className="pengajuan-list-container">
             <div className="pengajuan-list-card">
                 <h2 className="pengajuan-list-title">Daftar Pengajuan Magang</h2>
-
-                {/* ⭐ Container untuk tombol aksi (Buat Baru & Kembali) */}
                 <div className="pengajuan-actions-container">
-                    <Link
-                        to="/pengajuan-baru"
-                        className="pengajuan-list-create-button"
-                    >
+                    <Link to="/pengajuan-baru" className="pengajuan-list-create-button">
                         Buat Pengajuan Baru
                     </Link>
-                    <button
-                        onClick={() => navigate('/dashboard-user')} // ⭐ Tombol ini mengarah ke /dashboard-user
-                        className="pengajuan-back-button"
-                    >
+                    <button onClick={() => navigate('/dashboard-user')} className="pengajuan-back-button">
                         Kembali
                     </button>
                 </div>
-
-                {/* Tabel Responsif */}
                 <div className="pengajuan-table-wrapper">
                     <table className="pengajuan-table">
                         <thead>
@@ -159,10 +172,7 @@ export default function PengajuanList() {
                                     </td>
                                     <td className="table-cell action-cell">
                                         <div className="action-buttons-container">
-                                            <Link
-                                                to={`/pengajuan/${item.id}`}
-                                                className="action-link"
-                                            >
+                                            <Link to={`/pengajuan/${item.id}`} className="action-link">
                                                 Lihat Detail
                                             </Link>
                                             <button
@@ -173,6 +183,16 @@ export default function PengajuanList() {
                                             >
                                                 Hapus
                                             </button>
+                                            
+                                            {/* Tampilkan tombol unduh jika file bukti selesai ada */}
+                                            {item.bukti_selesai_path && (
+                                                <button
+                                                    onClick={() => handleDownload(item.id)}
+                                                    className="action-button download-button"
+                                                >
+                                                    Unduh Bukti
+                                                </button>
+                                            )}
                                         </div>
                                     </td>
                                 </tr>

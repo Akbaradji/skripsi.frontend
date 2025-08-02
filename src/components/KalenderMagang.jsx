@@ -3,13 +3,14 @@ import axios from 'axios';
 import moment from 'moment';
 import { Dialog, Transition } from '@headlessui/react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import '../assets/css/KalenderMagang.css';
 
-// Fungsi dummy untuk mendapatkan role user (ganti dengan logika autentikasi Anda)
+// Fungsi untuk mendapatkan role user dari localStorage
 const getCurrentUserRole = () => {
-    // ⭐ PERBAIKAN: Pastikan role selalu huruf kecil dan tanpa spasi
-    return localStorage.getItem('role')?.toLowerCase().trim() || 'mahasiswa'; 
+    return localStorage.getItem('role')?.toLowerCase().trim() || 'mahasiswa';
 };
 
 const KalenderMagang = () => {
@@ -20,19 +21,19 @@ const KalenderMagang = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     const [currentUser, setCurrentUser] = useState({
-        id: 1, // Anda mungkin perlu mendapatkan ID user aktual dari autentikasi
+        id: 1, 
         role: getCurrentUserRole(),
     });
 
     const BASE_URL = 'http://localhost:8000/api';
 
+    // Mengambil data pengajuan magang
     const fetchPengajuanMagang = async () => {
         try {
             const endpoint = currentUser.role === 'admin' ? '/admin/pengajuan' : '/pengajuan';
             const token = localStorage.getItem('token');
             if (!token) {
                 console.error("Authentication token not found. Redirecting to login.");
-                // navigate('/login');
                 return;
             }
 
@@ -48,13 +49,13 @@ const KalenderMagang = () => {
         }
     };
 
+    // Mengambil data logbooks
     const fetchLogbooks = async () => {
         try {
             const endpoint = currentUser.role === 'admin' ? '/logbooks' : '/logbooks';
             const token = localStorage.getItem('token');
             if (!token) {
                 console.error("Authentication token not found. Redirecting to login.");
-                // navigate('/login');
                 return;
             }
 
@@ -79,14 +80,11 @@ const KalenderMagang = () => {
         fetchPengajuanMagang();
         fetchLogbooks();
 
-        // ⭐ Tambahkan console.log di sini untuk debugging
-        console.log('Current User Role (in KalenderMagang useEffect):', currentUser.role); 
-        console.log('Dashboard Path (in KalenderMagang useEffect):', getDashboardPath());
-
         return () => {
             window.removeEventListener('storage', handleStorageChange);
         };
     }, [currentUser.role]);
+
 
     const getDaysInMonth = () => {
         const startOfMonth = currentMonth.clone().startOf('month');
@@ -172,6 +170,7 @@ const KalenderMagang = () => {
         if (!clickedDay) return;
         const formattedClickedDate = clickedDay.format('YYYY-MM-DD');
 
+        // Filter logbook berdasarkan tanggal yang diklik
         const logsForSelectedDate = logbooks.filter(logbook =>
             moment(logbook.tanggal).format('YYYY-MM-DD') === formattedClickedDate
         );
@@ -185,7 +184,6 @@ const KalenderMagang = () => {
         setSelectedDateLogbooks([]);
     };
 
-    // ⭐ Fungsi untuk menentukan tujuan tombol kembali
     const getDashboardPath = () => {
         return currentUser.role === 'admin' ? '/dashboard-admin' : '/dashboard-user';
     };
@@ -290,17 +288,13 @@ const KalenderMagang = () => {
                                                         <p className="logbook-activity-text">
                                                             <span className="logbook-label">Aktivitas:</span> {log.aktivitas}
                                                         </p>
-                                                        <p className="logbook-status-text">
-                                                            <span className="logbook-label">Status:</span>{' '}
-                                                            <span className={`status-badge status-${log.status}`}>
-                                                                {log.status.charAt(0).toUpperCase() + log.status.slice(1)}
-                                                            </span>
-                                                        </p>
+                                                        
                                                         {log.catatan_pembimbing && (
                                                             <p className="logbook-note-text">
                                                                 <span className="logbook-label">Catatan Pembimbing:</span> {log.catatan_pembimbing}
                                                             </p>
                                                         )}
+                                                        
                                                     </div>
                                                 ))
                                             ) : (
@@ -324,6 +318,7 @@ const KalenderMagang = () => {
                     </Dialog>
                 </Transition>
             </div>
+            <ToastContainer />
         </div>
     );
 };

@@ -123,17 +123,13 @@ export default function AdminPengajuanList() {
         }
     };
 
-    // ⭐ FUNGSI handleDelete YANG SUDAH Disesuaikan untuk Admin
     const handleDelete = async (id, status) => {
-        // Ambil peran pengguna dari localStorage
         const userRole = localStorage.getItem('role'); 
 
-        // Logika ini mencegah penghapusan jika status bukan 'pending' HANYA untuk mahasiswa
         if (userRole === 'mahasiswa' && status !== 'pending') {
             toast.warn('Pengajuan yang sudah diproses tidak bisa dihapus oleh mahasiswa.', { position: "top-right" });
             return;
         }
-        // Admin dapat menghapus kapan saja, jadi tidak ada pengecekan status di sini untuk admin.
 
         if (!window.confirm('Yakin ingin menghapus pengajuan ini?')) return;
 
@@ -150,7 +146,7 @@ export default function AdminPengajuanList() {
         }
     };
 
-    // Fungsi untuk mengunggah bukti selesai magang
+    // ⭐ PERBAIKAN: Fungsi untuk mengunggah bukti selesai magang
     const handleUploadProof = async (pengajuanId) => {
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
@@ -161,24 +157,25 @@ export default function AdminPengajuanList() {
 
             const formData = new FormData();
             formData.append('pengajuan_id', pengajuanId);
-            formData.append('proof_file', file);
+            formData.append('bukti_selesai_file', file); // Perbaiki nama key menjadi 'bukti_selesai_file'
 
             try {
                 const token = localStorage.getItem('token');
-                await axios.post('http://localhost:8000/api/admin/upload-internship-proof', formData, {
+                // ⭐ PERBAIKAN: Ganti URL yang salah ketik
+                await axios.post('http://localhost:8000/api/admin/upload-bukti-selesai', formData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'multipart/form-data',
                     },
                 });
                 toast.success('Bukti selesai magang berhasil diunggah!', { position: "top-right" });
-                fetchPengajuan(); // Refresh data untuk menampilkan URL bukti baru
+                fetchPengajuan();
             } catch (error) {
                 console.error("Error uploading proof:", error.response?.data || error.message);
                 toast.error('Gagal mengunggah bukti selesai magang: ' + (error.response?.data?.message || 'Unknown error'), { position: "top-right" });
             }
         };
-        fileInput.click(); // Memicu dialog pemilihan file
+        fileInput.click();
     };
 
 
@@ -204,8 +201,6 @@ export default function AdminPengajuanList() {
         <div className="admin-pengajuan-list-container">
             <div className="admin-pengajuan-list-card">
                 <h2 className="admin-pengajuan-list-title">Daftar Pengajuan Magang (Admin)</h2>
-
-                {/* Filter dan Bulk Action */}
                 <div className="admin-filter-bulk-container">
                     <div className="admin-filter-group">
                         <select
@@ -218,7 +213,6 @@ export default function AdminPengajuanList() {
                             <option value="disetujui">Disetujui</option>
                             <option value="ditolak">Ditolak</option>
                         </select>
-
                         <input
                             type="text"
                             placeholder="Filter Bidang Magang"
@@ -227,7 +221,6 @@ export default function AdminPengajuanList() {
                             className="admin-filter-input"
                         />
                     </div>
-
                     <div className="admin-bulk-action-group">
                         <button
                             onClick={() => handleBulkAction('disetujui')}
@@ -245,8 +238,6 @@ export default function AdminPengajuanList() {
                         </button>
                     </div>
                 </div>
-
-                {/* Tabel Responsif */}
                 <div className="admin-pengajuan-table-wrapper">
                     <table className="admin-pengajuan-table">
                         <thead>
@@ -267,7 +258,7 @@ export default function AdminPengajuanList() {
                                 <th className="admin-table-header">Status</th>
                                 <th className="admin-table-header">Catatan</th>
                                 <th className="admin-table-header">Dokumen Pengajuan</th>
-                                <th className="admin-table-header">Bukti Selesai</th> {/* Kolom baru */}
+                                <th className="admin-table-header">Bukti Selesai</th>
                                 <th className="admin-table-header action-header">Aksi</th>
                             </tr>
                         </thead>
@@ -302,10 +293,9 @@ export default function AdminPengajuanList() {
                                             <span className="no-file-text">Tidak ada file</span>
                                         )}
                                     </td>
-                                    {/* Kolom untuk Bukti Selesai Magang */}
                                     <td className="admin-table-cell">
-                                        {item.bukti_selesai_magang_url ? (
-                                            <a href={item.bukti_selesai_magang_url} target="_blank" rel="noopener noreferrer" className="pdf-link">
+                                        {item.bukti_selesai_path ? (
+                                            <a href={item.bukti_selesai_path} target="_blank" rel="noopener noreferrer" className="pdf-link">
                                                 Lihat Bukti
                                             </a>
                                         ) : (
@@ -382,3 +372,4 @@ export default function AdminPengajuanList() {
         </div>
     );
 }
+

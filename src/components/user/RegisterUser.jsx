@@ -111,7 +111,7 @@ export default function Register() {
                     
                     <div className="recaptcha-container">
                         <ReCAPTCHA
-                            sitekey="6LcB6IcrAAAAAJxws_J9NN0GSs7xgqk0RpScRLPi" // Ganti dengan site key reCAPTCHA Anda
+                            sitekey="6LcA35crAAAAAFg9CBeXzMriMfeO3g0J1pjTkPG4" // Ganti dengan site key reCAPTCHA Anda
                             onChange={handleCaptchaChange}
                         />
                     </div>

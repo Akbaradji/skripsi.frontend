@@ -97,8 +97,8 @@ export default function PengajuanDetail() {
                     <div className="detail-item">
                         <p className="detail-label">Dokumen Pengajuan:</p>
                         <p className="detail-value">
-                            {pengajuan.pdf_pengajuan ? (
-                                <a href={pengajuan.pdf_pengajuan} target="_blank" rel="noopener noreferrer" className="pdf-link">
+                            {pengajuan.dokumen_url ? ( // ⭐ PERBAIKAN: Menggunakan properti dokumen_url
+                                <a href={pengajuan.dokumen_url} target="_blank" rel="noopener noreferrer" className="pdf-link">
                                     Lihat Dokumen PDF
                                 </a>
                             ) : (
@@ -106,12 +106,11 @@ export default function PengajuanDetail() {
                             )}
                         </p>
                     </div>
-                    {/* Tampilan Bukti Selesai Magang */}
                     <div className="detail-item">
                         <p className="detail-label">Bukti Selesai Magang:</p>
                         <p className="detail-value">
-                            {pengajuan.bukti_selesai_magang_url ? (
-                                <a href={pengajuan.bukti_selesai_magang_url} target="_blank" rel="noopener noreferrer" className="pdf-link">
+                            {pengajuan.bukti_selesai_url ? ( // ⭐ PERBAIKAN: Menggunakan properti bukti_selesai_url
+                                <a href={pengajuan.bukti_selesai_url} target="_blank" rel="noopener noreferrer" className="pdf-link">
                                     Unduh Bukti PDF
                                 </a>
                             ) : (
@@ -134,3 +133,4 @@ export default function PengajuanDetail() {
         </div>
     );
 }
+
