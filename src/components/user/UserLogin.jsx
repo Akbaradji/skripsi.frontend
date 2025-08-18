@@ -89,7 +89,7 @@ export default function Login() {
                         />
                     </div>
                     <div className="recaptcha-container">
-                        <ReCAPTCHA sitekey="6LcA35crAAAAAFg9CBeXzMriMfeO3g0J1pjTkPG4" onChange={setCaptcha} />
+                        <ReCAPTCHA sitekey="6Ldnx6krAAAAAC-I-0WGOt0zj-ZOBEO05h8WaaDa" onChange={setCaptcha} />
                     </div>
                     <button
                         type="submit"

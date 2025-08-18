@@ -81,7 +81,7 @@ export default function UserDashboard() {
 
                 {/* Info Selamat Datang */}
                 <p className="welcome-message">Selamat datang, <strong className="user-name">{user.name}</strong>!</p>
-                <p className="user-role">Role: <em className="italic">{user.role}</em></p>
+                <p className="user-role"> <em className="italic">{user.role}</em></p>
 
                 {/* Tombol Logout */}
                 <div className="logout-button-container">
